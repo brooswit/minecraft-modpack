@@ -1,0 +1,34 @@
+name: Update FertileBiomes
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'FertileBiomes version to update to (leave empty for latest)'
+        required: false
+        default: ''
+  repository_dispatch:
+    types:
+      - fertile-biomes-updated
+
+jobs:
+  update:
+    name: Update FertileBiomes in modpack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packwiz
+        run: |
+          go install github.com/packwiz/packwiz@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Update fertile-biomes
+        run: packwiz update fertile-biomes
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update fertile-biomes mod\n\nCo-Authored-By: Paperclip <noreply@paperclip.ing>"
+          branch: main
