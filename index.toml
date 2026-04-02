@@ -6,7 +6,7 @@ hash = "247d0fce6ed0968a09a79b9aee447a5b6425a10cc9662ef282fd814b51fe4dbe"
 
 [[files]]
 file = "build.sh"
-hash = "59f204d1485f0fa1dc719285023cd42bcbb88937876735eb51eac601f22b03b7"
+hash = "781952a42ca2fea7c179af3fdde427ed7bff03d0669f97d10b431b210ad556a6"
 
 [[files]]
 file = "configs/.gitkeep"

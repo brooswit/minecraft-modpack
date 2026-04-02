@@ -7,9 +7,6 @@ OUTPUT_DIR="${OUTPUT_DIR:-dist}"
 
 mkdir -p "$OUTPUT_DIR"
 
-echo "==> Refreshing packwiz index..."
-"$PACKWIZ" refresh
-
 echo "==> Exporting .mrpack..."
 "$PACKWIZ" modrinth export -o "$OUTPUT_DIR/${PACK_NAME}.mrpack" -y
 
