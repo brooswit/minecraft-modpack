@@ -1,0 +1,34 @@
+name: Update Experience Comes With Age
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'ExperienceComesWithAge version to update to (leave empty for latest)'
+        required: false
+        default: ''
+  repository_dispatch:
+    types:
+      - experience-comes-with-age-updated
+
+jobs:
+  update:
+    name: Update experience-comes-with-age in modpack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packwiz
+        run: |
+          go install github.com/packwiz/packwiz@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Update experience-comes-with-age
+        run: packwiz update experience-comes-with-age
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update experience-comes-with-age mod\n\nCo-Authored-By: Paperclip <noreply@paperclip.ing>"
+          branch: main

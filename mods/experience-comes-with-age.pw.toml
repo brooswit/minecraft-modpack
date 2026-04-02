@@ -1,0 +1,21 @@
+# PLACEHOLDER: ExperienceComesWithAge mod is not yet published to Modrinth.
+# Once the Modrinth project is created and a release is published,
+# replace this placeholder with the real mod-id and version from Modrinth.
+# The mod repo is: https://github.com/infrastructureSickos/experience-comes-with-age
+# The CI workflow will publish to Modrinth on tag push (v*).
+
+name = "ExperienceComesWithAge"
+filename = "experience-comes-with-age-1.0.0.jar"
+side = "both"
+
+[download]
+# TODO: Update url, hash-format, and hash once mod is published to Modrinth
+url = ""
+hash-format = "sha512"
+hash = ""
+
+[update]
+[update.modrinth]
+# TODO: Replace with real Modrinth project ID once created
+mod-id = "experience-comes-with-age"
+version = ""
