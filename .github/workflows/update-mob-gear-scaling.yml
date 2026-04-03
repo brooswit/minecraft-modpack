@@ -1,0 +1,34 @@
+name: Update Mob Gear Scaling
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Mob Gear Scaling version to update to (leave empty for latest)'
+        required: false
+        default: ''
+  repository_dispatch:
+    types:
+      - mob-gear-scaling-updated
+
+jobs:
+  update:
+    name: Update Mob Gear Scaling in modpack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packwiz
+        run: |
+          go install github.com/packwiz/packwiz@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Update mob-gear-scaling
+        run: packwiz update mob-gear-scaling
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update mob-gear-scaling mod\n\nCo-Authored-By: Paperclip <noreply@paperclip.ing>"
+          branch: main
