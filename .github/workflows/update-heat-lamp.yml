@@ -1,0 +1,34 @@
+name: Update Heat Lamp
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Heat Lamp version to update to (leave empty for latest)'
+        required: false
+        default: ''
+  repository_dispatch:
+    types:
+      - heat-lamp-updated
+
+jobs:
+  update:
+    name: Update Heat Lamp in modpack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packwiz
+        run: |
+          go install github.com/packwiz/packwiz@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Update heat-lamp
+        run: packwiz update heat-lamp
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update heat-lamp mod\n\nCo-Authored-By: Paperclip <noreply@paperclip.ing>"
+          branch: main
