@@ -1,0 +1,34 @@
+name: Update Dangerous Fire
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Dangerous Fire version to update to (leave empty for latest)'
+        required: false
+        default: ''
+  repository_dispatch:
+    types:
+      - dangerous-fire-updated
+
+jobs:
+  update:
+    name: Update Dangerous Fire in modpack
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packwiz
+        run: |
+          go install github.com/packwiz/packwiz@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Update dangerous-fire
+        run: packwiz update dangerous-fire
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update dangerous-fire mod\n\nCo-Authored-By: Paperclip <noreply@paperclip.ing>"
+          branch: main
